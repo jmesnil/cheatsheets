@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<title>Python Cheatsheet</title>
+<!--[if IE]>
+<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+<link rel=stylesheet href=screen.css>
+</head>
+
+<body>
+<header>
+<h1>Python Cheatsheet</h1>
+</header>
+
+<p id="toc">&nbsp;</p>
+
+<section>
+<h2 id=script>Python File</h2>
+<h3 id=script-header>Header</h3>
+<pre><code>
+#!/usr/bin/env python
+# -*- python -*-
+</code></pre>
+
+<h3 id=script-main>Script execution</h3>
+<pre><code>
+# at the end of the script
+if __name__ == '__main__':
+   # executed when the script is executed from the shell
+</code></pre>
+</section>
+
+
+<section>
+<h2 id=file>File I/O</h2>
+
+<h3 id=file-stdin>Read from a file or stdin</h3>
+<pre><code>
+def <mark>file_or_stdin(f)</mark>:
+   if f == '-':
+      return sys.stdin
+   else:
+      return file(f)
+
+for line in <mark>file_or_stdin(sys.argv[1])</mark>:
+   print line 
+</code></pre>
+</section>
+
+<section>
+<h2 id=http>HTTP</h2>
+<h3 id=http-get>GET Request</h3>
+
+<pre><code>
+import <mark>httplib</mark>
+
+conn = httplib.HTTPConnection(host, port)
+conn.request('GET',request, "", headers)
+res = conn.getresponse()
+if (res.status != 200):
+   print("HTTP", res.status, res.reason)
+out = res.read()
+</code></pre>
+</section>
+
+<section>
+<h2 id=xml>XML</h2>
+<h3>Get a DOM document from a string</h3>
+<pre><code>
+from <mark>xml.dom import minidom</mark>
+
+xmldoc = minidom.parseString(xml)
+</code></pre>
+
+<h3 id=xml-elements>Get all elements by tag name</h3>
+<pre><code>
+elements = xmldoc.getElementsByTagName(tagName)
+</code></pre>
+
+<h3 id=xml-element-text>Get the text of an element</h3>
+<pre><code>
+text = <mark>element.firstChild.data</mark>
+</code></pre>
+
+<h3 id=xml-attr-value>Get the value of an element's attribute</h3>
+<pre><code>
+value = <mark>element.attributes[name].value</mark>
+</code></pre>
+</section>
+
+<section>
+<h2 id=json>JSON</h2>
+<h3 id=json-module>Import JSON module</h3>
+<pre><code>
+  try:
+      import json
+  except ImportError:
+      import simplejson as json 
+</code></pre>
+
+<h3 id=json-load>Read a JSON string</h3>
+<pre><code>
+obj = <mark>json.loads(str)</mark>
+print obj['id']
+print obj['document']['body']
+</code></pre>
+</section>
+
+<section>
+<h2 id=cli>CLI parameters</h2>
+
+<p>Run the script with <kbd>-h</kbd> to display the usage</p>
+
+<pre><code>
+import <mark>argparse</mark>
+
+parser = argparse.ArgumentParser(description='This script reads data and do other stuff.')    
+parser.add_argument('-v', '--verbose', required=False, dest='verbose', 
+                    default=False,
+                    help='Print verbose logs', 
+                    action='store_true')
+parser.add_argument('-H', '--host', metavar='HOST', required=True, dest='host', 
+                    help='Name of the host of the server.')
+parser.add_argument('-o', '--out', metavar='OUTPUT_FILE', required=False, dest='outFile', 
+                    default='out.txt',
+                    help='Name of the output file. Default base is out.txt.')
+args = parser.parse_args()
+
+print args.verbose
+print args.host
+print args.outFile
+
+</code></pre>
+
+</section>
+
+<section>
+<h2 id=pprint>Pretty Print</h2>
+
+<pre><code>
+import pprint
+
+pp = pprint.PrettyPrinter(indent=4)
+pp.pprint(myobj)
+</code></pre>
+</section>
+
+
+<footer>
+&copy; 201 <a href="http://jmesnil.net/">Jeff Mesnil</a>
+</footer>
+
+<script src='http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js'></script>
+<script src='j/doc.js'></script>
+
+</body>
+</html>
