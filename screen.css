@@ -65,8 +65,12 @@ code, var, samp {
 
 samp {
   display:inline ;
-  color: #667;
 }
+
+pre span, .p {
+    color: #667;
+}
+
 mark {
   display: inline-block;
   background: #ff8;
